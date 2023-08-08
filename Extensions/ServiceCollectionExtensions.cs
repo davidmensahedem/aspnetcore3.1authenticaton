@@ -31,6 +31,7 @@ namespace aspnetauthentication.Extensions
                 }
 
                 var jwtBearerConfig = new JwtBearerConfig();
+
                 jwtBearerAction.Invoke(jwtBearerConfig);
 
                 services.AddAuthentication(s =>{
@@ -39,9 +40,11 @@ namespace aspnetauthentication.Extensions
                 }).AddJwtBearer(jwtOptions => {
 
                     jwtOptions.Events = new JwtBearerEvents(){
+
                         OnTokenValidated = async (ctx) => 
                         {
                             var userPhoneNumber = ctx.Principal.FindFirst(c => c.Type == ClaimTypes.MobilePhone)?.Value;
+
                             var userBearerToken = ctx.HttpContext.Request.Headers["Authorization"][0].Split(new []{' '})[1];
 
                             await Task.Delay(0);

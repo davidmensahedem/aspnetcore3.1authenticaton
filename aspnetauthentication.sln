@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetauthentication", "aspnetauthentication.csproj", "{06E88408-E537-4503-AEE0-4884225E594D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetauthentication", "aspnetauthentication.csproj", "{06E88408-E537-4503-AEE0-4884225E594D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{0F093219-00F1-4891-969E-C0A33DCFECE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pg.Storage", "..\Storage\Storage\Pg.Storage.csproj", "{82669083-7FE9-429F-8D7C-7323B069D430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4C5DF176-54CB-44E6-A3CD-9D531BE4FE79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,17 @@ Global
 		{06E88408-E537-4503-AEE0-4884225E594D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06E88408-E537-4503-AEE0-4884225E594D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06E88408-E537-4503-AEE0-4884225E594D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82669083-7FE9-429F-8D7C-7323B069D430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82669083-7FE9-429F-8D7C-7323B069D430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82669083-7FE9-429F-8D7C-7323B069D430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82669083-7FE9-429F-8D7C-7323B069D430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06E88408-E537-4503-AEE0-4884225E594D} = {4C5DF176-54CB-44E6-A3CD-9D531BE4FE79}
+		{82669083-7FE9-429F-8D7C-7323B069D430} = {0F093219-00F1-4891-969E-C0A33DCFECE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A61ACCED-CAB9-436E-927E-C3264881FFAA}
