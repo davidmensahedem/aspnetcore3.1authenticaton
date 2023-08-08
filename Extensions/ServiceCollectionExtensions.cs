@@ -77,8 +77,7 @@ namespace aspnetauthentication.Extensions
                 });
             }
 
-            throw new Exception();
-
+            return services;
         }
     }
 }
