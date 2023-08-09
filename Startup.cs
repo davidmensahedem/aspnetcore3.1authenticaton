@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Storage;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,10 +32,25 @@ namespace aspnetauthentication
             {
                 option.UseNpgsql(_config.GetConnectionString("DbConnection"));
             },ServiceLifetime.Transient).AddUnitOfWork<ApplicationDbContext>();
-
+            services.Configure<SwaggerDocConfig>(c => _config.GetSection(nameof(SwaggerDocConfig)).Bind(c));
             services.AddCors();
             services.AddControllers();
             services.AllowAuthentication(false, false, true, c => _config.GetSection(nameof(JwtBearerConfig)).Bind(c));
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo 
+                { 
+                    Title = ".NET CORE API 3.1 AUTHENTICATION",
+                    Description = "Authentication in .net 3.1",
+                    Version= "v1"
+                });
+
+                options.EnableAnnotations();
+
+
+
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +61,23 @@ namespace aspnetauthentication
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            var swaggerDocConfig = app.ApplicationServices.GetService<IOptions<SwaggerDocConfig>>().Value;
+
+            if (swaggerDocConfig.ShowSwaggerUI)
+            {
+                app.UseSwagger();
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "3.1 AUTHENTICATION");
+                    if (!swaggerDocConfig.EnableSwaggerTryIt)
+                    {
+                        c.SupportedSubmitMethods(new SubmitMethod[] { });
+                    }
+                });
+
             }
 
             app.UseHttpsRedirection();

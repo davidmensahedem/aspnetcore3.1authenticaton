@@ -9,6 +9,8 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.UnitOfWork" Version="3.1.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.5" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.1" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.9.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
   </ItemGroup>
