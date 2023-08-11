@@ -1,17 +1,21 @@
 using Arch.EntityFrameworkCore.UnitOfWork;
 using aspnetauthentication.Extensions;
+using aspnetauthentication.Models;
 using aspnetauthentication.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Storage;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace aspnetauthentication
@@ -34,21 +38,30 @@ namespace aspnetauthentication
             },ServiceLifetime.Transient).AddUnitOfWork<ApplicationDbContext>();
             services.Configure<SwaggerDocConfig>(c => _config.GetSection(nameof(SwaggerDocConfig)).Bind(c));
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = context => new BadRequestObjectResult(
+                    new BadRequestApiResponse("Model validation errors") 
+                    { 
+                        Errors = context.GetError()
+                    });
+            });
+
             services.AllowAuthentication(false, false, true, c => _config.GetSection(nameof(JwtBearerConfig)).Bind(c));
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo 
+                options.SwaggerDoc("v1",new OpenApiInfo 
                 { 
                     Title = ".NET CORE API 3.1 AUTHENTICATION",
-                    Description = "Authentication in .net 3.1",
+                    Description = "Authentication in .NET CORE 3.1",
                     Version= "v1"
                 });
 
                 options.EnableAnnotations();
-
-
-
 
             });
         }
